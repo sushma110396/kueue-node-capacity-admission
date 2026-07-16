@@ -1,5 +1,3 @@
-# Node Capacity-Aware Admission Benchmark
-
 ## Objective
 
 Evaluate the impact of introducing node capacity-aware admission into Kueue's scheduler. Before reserving ClusterQueue quota, the scheduler determines whether a workload can fit on at least one node based on allocatable CPU and memory, preventing infeasible workloads from consuming admission resources.
