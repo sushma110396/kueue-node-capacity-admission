@@ -99,6 +99,32 @@ The enhanced admission pipeline identified infeasible workloads before reserving
 
 ---
 
+## Benchmark Results
+
+### Runnable Workload Admissions
+
+<p align="center">
+  <img src="images/Runnable Workload Admissions.png" width="700">
+</p>
+
+### Infeasible Workload Admissions
+
+<p align="center">
+  <img src="images/Infeasible Workload Admissions.png" width="700">
+</p>
+
+### ClusterQueue Quota Reserved by Infeasible Workloads
+
+<p align="center">
+  <img src="images/ClusterQueue Quota Reserved by Infeasible Workloads.png" width="700">
+</p>
+
+### Runnable Workload Admission Rate
+
+<p align="center">
+  <img src="images/Runnable Workload Admission Rate.png" width="700">
+</p>
+
 ## Key Findings
 
 - Increased runnable workload admission rates from 4–20% with the baseline scheduler to 100% across all benchmark scenarios.
@@ -106,9 +132,6 @@ The enhanced admission pipeline identified infeasible workloads before reserving
 - Prevented creation of Pods for workloads that exceeded the allocatable CPU or memory capacity of every node, reducing unnecessary scheduling attempts and FailedScheduling events.
 
 ---
-
-<img width="2790" height="947" alt="benchmark-charts" src="https://github.com/user-attachments/assets/2bb1ed0b-ca61-4849-8a8d-28adab6545ea" />
-
 
 ## Limitations
 
