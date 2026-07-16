@@ -36,7 +36,8 @@ For every benchmark:
 
 This models a realistic burst in which infeasible workloads arrive ahead of runnable workloads and compete for the same ClusterQueue quota.
 
-### Baseline Scheduler (Node Feasibility Check Disabled)
+## Representative Result (30 Infeasible / 30 Runnable)
+### Baseline Scheduler (Node Capacity-Aware Admission Disabled)
 
 | Metric | Value |
 |--------|------:|
@@ -52,7 +53,7 @@ This models a realistic burst in which infeasible workloads arrive ahead of runn
 
 The baseline scheduler admitted infeasible workloads because admission considered only the ClusterQueue quota. Eight workloads reserved 96 CPU, leaving enough quota for only two runnable workloads, even though the remaining runnable workloads could fit on the node.
 
-### Modified Scheduler (Node Feasibility Check Enabled)
+### Modified Scheduler (Node Capacity-Aware Admission Enabled)
 
 | Metric | Value |
 |--------|------:|
@@ -82,25 +83,25 @@ The enhanced admission pipeline identified infeasible workloads before reserving
 ### Runnable Workload Admissions
 
 <p align="center">
-  <img src="/images/Runnable Workload Admissions.png" width="700">
+  <img src="../images/Runnable Workload Admissions.png" width="700">
 </p>
 
 ### Infeasible Workload Admissions
 
 <p align="center">
-  <img src="/images/Infeasible Workload Admissions.png" width="700">
+  <img src="../images/Infeasible Workload Admissions.png" width="700">
 </p>
 
 ### ClusterQueue Quota Reserved by Infeasible Workloads
 
 <p align="center">
-  <img src="/images/ClusterQueue Quota Reserved by Infeasible Workloads.png" width="700">
+  <img src="../images/ClusterQueue Quota Reserved by Infeasible Workloads.png" width="700">
 </p>
 
 ### Runnable Workload Admission Rate
 
 <p align="center">
-  <img src="/images/Runnable Workload Admission Rate.png" width="700">
+  <img src="../images/Runnable Workload Admission Rate.png" width="700">
 </p>
 
 ## Key Findings
