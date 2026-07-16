@@ -1,2 +1,121 @@
-# kueue-node-capacity-admission
-Node capacity-aware admission enhancement for the Kubernetes Kueue scheduler with benchmarking and performance evaluation.
+# Node Capacity-Aware Admission for Kueue
+
+A distributed systems project that enhances the Kubernetes-native Kueue scheduler by introducing node capacity-aware admission to prevent workloads that cannot fit on any cluster node from reserving ClusterQueue quota.
+
+---
+
+## Overview
+
+Kueue is a Kubernetes-native job scheduler that admits workloads based on available ClusterQueue quota before they are scheduled onto cluster nodes.
+
+In the baseline scheduler, workloads whose CPU or memory requests exceeded the allocatable capacity of every node could still be admitted if sufficient ClusterQueue quota was available. Although these workloads could never be scheduled, they continued to reserve ClusterQueue quota and prevented runnable workloads from being admitted.
+
+This project introduces a node capacity-aware admission enhancement that evaluates whether a workload can fit on at least one node before reserving ClusterQueue quota. By filtering infeasible workloads early in the admission pipeline, the scheduler preserves quota for runnable workloads and avoids unnecessary Pod creation.
+
+---
+
+## Problem Statement
+
+The baseline admission process considered only ClusterQueue quota during admission.
+
+As a result:
+
+- Workloads that could never fit on any node were still admitted.
+- These workloads reserved ClusterQueue quota.
+- Kubernetes repeatedly attempted to schedule the resulting Pods, producing `FailedScheduling` events.
+- Runnable workloads experienced reduced admission opportunities despite being schedulable on the available nodes.
+
+---
+
+## Solution
+
+The scheduler was enhanced to perform node capacity feasibility evaluation before reserving ClusterQueue quota.
+
+For every workload, the scheduler:
+
+1. Computes the CPU and memory requested by each PodSet.
+2. Compares those requests against the allocatable resources of every cluster node.
+3. Determines whether at least one node can accommodate the workload.
+4. Skips workloads that cannot fit on any node before ClusterQueue quota reservation.
+
+This preserves ClusterQueue quota for runnable workloads while preventing unnecessary Pod creation.
+
+---
+
+## Implementation Highlights
+
+- Added node capacity feasibility evaluation before ClusterQueue quota reservation.
+- Compared PodSet CPU and memory requests against node allocatable resources.
+- Skipped workloads that could not fit on any node during admission.
+- Added unit tests covering:
+  - Feasible workloads
+  - CPU-infeasible workloads
+  - Memory-infeasible workloads
+  - Clusters with no available nodes
+- Benchmarked the scheduler across multiple workload mixes containing runnable and infeasible workloads.
+
+---
+
+## Benchmark Summary
+
+The feature was evaluated using three mixed-workload scenarios on a Kind cluster.
+
+### Key Results
+
+- Increased runnable workload admission rates from **4–20%** to **100%** across all benchmark scenarios.
+- Eliminated ClusterQueue quota reservation by workloads that could not fit on any node.
+- Increased ClusterQueue quota available for runnable workloads from **4 CPU** to **60 CPU** in the representative workload mix (30 infeasible / 30 runnable).
+- Eliminated unnecessary Pod creation and scheduling attempts for workloads that exceeded the capacity of every node.
+
+![Benchmark Results](images/benchmark-results.png)
+
+For the complete benchmark methodology, workload configuration, experimental setup, and detailed results, see:
+
+**[`docs/benchmark.md`](docs/benchmark.md)**
+
+---
+
+## Repository Structure
+
+```
+.
+├── README.md
+├── docs
+│   ├── benchmark.md
+│   └── implementation.md
+├── images
+│   └── benchmark-results.png
+```
+
+---
+
+## Technologies
+
+- Go
+- Kubernetes
+- Kueue
+- Kind
+- Docker
+- Kubectl
+
+---
+
+## Learning Outcomes
+
+Through this project I gained experience with:
+
+- Distributed scheduler design
+- Kubernetes scheduling and admission workflows
+- Resource quota management
+- Go-based systems development
+- Open-source codebase exploration
+- Performance benchmarking and evaluation
+
+---
+
+## References
+
+- **Original Kueue Project**
+  https://github.com/kubernetes-sigs/kueue
+
+- This project was implemented by extending the Kueue scheduler in a personal fork for experimentation and benchmarking.
