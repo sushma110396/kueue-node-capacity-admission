@@ -19,7 +19,7 @@ As a result:
 - Workloads that could never fit on any node were still admitted.
 - These workloads reserved ClusterQueue quota.
 - Kubernetes repeatedly attempted to schedule the resulting Pods, producing `FailedScheduling` events.
-- Runnable workloads experienced reduced admission opportunities despite being schedulable on the available nodes.
+- Runnable workloads that could have been scheduled were blocked from admission because ClusterQueue quota had already been reserved by infeasible workloads.
 
 ## Solution
 
@@ -29,7 +29,7 @@ For every workload, the scheduler:
 
 1. Computes the CPU and memory requested by each PodSet.
 2. Compares those requests against the allocatable resources of every cluster node.
-3. Determines whether at least one node can accommodate the workload.
+3. Determines whether at least one node has sufficient allocatable CPU and memory to accommodate the workload.
 4. Skips workloads that cannot fit on any node before ClusterQueue quota reservation.
 
 This preserves ClusterQueue quota for runnable workloads while preventing unnecessary Pod creation.
@@ -77,7 +77,7 @@ This preserves ClusterQueue quota for runnable workloads while preventing unnece
 - Increased runnable workload admission rates from **4–20%** to **100%** across all benchmark scenarios.
 - Eliminated ClusterQueue quota reservation by workloads that could not fit on any node.
 - Increased ClusterQueue quota available for runnable workloads from **4 CPU** to **60 CPU** in the representative workload mix (30 infeasible / 30 runnable).
-- Eliminated unnecessary Pod creation and scheduling attempts for workloads that exceeded the capacity of every node.
+- Avoided unnecessary Pod creation and the resulting scheduling attempts for workloads that exceeded the capacity of every node.
 
 For the complete benchmark methodology, workload configuration, experimental setup, and detailed results, see:
 
@@ -90,7 +90,7 @@ For the complete benchmark methodology, workload configuration, experimental set
 ├── README.md
 ├── docs
 │   ├── benchmark.md
-│   └── implementation.md
+│  
 ├── images
 │   └── benchmark-results.png
 ```
@@ -104,20 +104,9 @@ For the complete benchmark methodology, workload configuration, experimental set
 - Docker
 - Kubectl
 
-## Learning Outcomes
+## Based On
 
-Through this project I gained experience with:
+This project extends the open-source Kueue scheduler.
 
-- Distributed scheduler design
-- Kubernetes scheduling and admission workflows
-- Resource quota management
-- Go-based systems development
-- Open-source codebase exploration
-- Performance benchmarking and evaluation
-
-## References
-
-- **Original Kueue Project**
-  https://github.com/kubernetes-sigs/kueue
-
-- This project was implemented by extending the Kueue scheduler in a personal fork for experimentation and benchmarking.
+Original project:
+https://github.com/kubernetes-sigs/kueue
