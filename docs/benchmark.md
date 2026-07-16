@@ -108,7 +108,7 @@ The enhanced admission pipeline identified infeasible workloads before reserving
 
 - Increased runnable workload admission rates from 4–20% with the baseline scheduler to 100% across all benchmark scenarios.
 - Eliminated ClusterQueue quota consumption by infeasible workloads, ensuring quota remained available for runnable workloads.
-- Prevented creation of Pods for workloads that exceeded the allocatable CPU or memory capacity of every node, reducing unnecessary scheduling attempts and FailedScheduling events.
+- Prevented creation of Pods for workloads that exceeded the allocatable CPU or memory capacity of every node, reducing unnecessary scheduling attempts and `FailedScheduling` events.
 
 ## Limitations
 
