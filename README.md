@@ -2,8 +2,6 @@
 
 A distributed systems project that enhances the Kubernetes-native Kueue scheduler by introducing node capacity-aware admission to prevent workloads that cannot fit on any cluster node from reserving ClusterQueue quota.
 
----
-
 ## Overview
 
 Kueue is a Kubernetes-native job scheduler that admits workloads based on available ClusterQueue quota before they are scheduled onto cluster nodes.
@@ -11,8 +9,6 @@ Kueue is a Kubernetes-native job scheduler that admits workloads based on availa
 In the baseline scheduler, workloads whose CPU or memory requests exceeded the allocatable capacity of every node could still be admitted if sufficient ClusterQueue quota was available. Although these workloads could never be scheduled, they continued to reserve ClusterQueue quota and prevented runnable workloads from being admitted.
 
 This project introduces a node capacity-aware admission enhancement that evaluates whether a workload can fit on at least one node before reserving ClusterQueue quota. By filtering infeasible workloads early in the admission pipeline, the scheduler preserves quota for runnable workloads and avoids unnecessary Pod creation.
-
----
 
 ## Problem Statement
 
@@ -24,8 +20,6 @@ As a result:
 - These workloads reserved ClusterQueue quota.
 - Kubernetes repeatedly attempted to schedule the resulting Pods, producing `FailedScheduling` events.
 - Runnable workloads experienced reduced admission opportunities despite being schedulable on the available nodes.
-
----
 
 ## Solution
 
@@ -40,8 +34,6 @@ For every workload, the scheduler:
 
 This preserves ClusterQueue quota for runnable workloads while preventing unnecessary Pod creation.
 
----
-
 ## Implementation Highlights
 
 - Added node capacity feasibility evaluation before ClusterQueue quota reservation.
@@ -53,8 +45,6 @@ This preserves ClusterQueue quota for runnable workloads while preventing unnece
   - Memory-infeasible workloads
   - Clusters with no available nodes
 - Benchmarked the scheduler across multiple workload mixes containing runnable and infeasible workloads.
-
----
 
 ## Benchmark Summary
 
@@ -73,8 +63,6 @@ For the complete benchmark methodology, workload configuration, experimental set
 
 **[`docs/benchmark.md`](docs/benchmark.md)**
 
----
-
 ## Repository Structure
 
 ```
@@ -87,8 +75,6 @@ For the complete benchmark methodology, workload configuration, experimental set
 │   └── benchmark-results.png
 ```
 
----
-
 ## Technologies
 
 - Go
@@ -97,8 +83,6 @@ For the complete benchmark methodology, workload configuration, experimental set
 - Kind
 - Docker
 - Kubectl
-
----
 
 ## Learning Outcomes
 
@@ -110,8 +94,6 @@ Through this project I gained experience with:
 - Go-based systems development
 - Open-source codebase exploration
 - Performance benchmarking and evaluation
-
----
 
 ## References
 
