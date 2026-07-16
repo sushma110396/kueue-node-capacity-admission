@@ -19,19 +19,19 @@ Evaluate the impact of introducing node capacity-aware admission into Kueue's sc
 
 Three workload mixes were evaluated to measure how infeasible workloads affect admission decisions under different queue compositions.
 
-| Scenario | Unschedulable Workloads | Runnable Workloads |
+| Scenario | Infeasible Workloads | Runnable Workloads |
 |----------|------------------------:|-------------------:|
 | A | 10 | 50 |
 | B | 30 | 30 |
 | C | 50 | 10 |
 
-Each runnable workload requested **2 CPU**, while each unschedulable workload requested **12 CPU**. Since the cluster contained a single node with **10 allocatable CPU**, unschedulable workloads could never be placed on any node.
+Each runnable workload requested **2 CPU**, while each infeasible workload requested **12 CPU**. Since the cluster contained a single node with **10 allocatable CPU**, infeasible workloads could never be placed on any node.
 
 ### Submission Order
 
 For every benchmark:
 
-1. Submit all unschedulable workloads.
+1. Submit all infeasible workloads.
 2. Submit all runnable workloads.
 
 This models a realistic burst in which infeasible workloads arrive ahead of runnable workloads and compete for the same ClusterQueue quota.
@@ -42,10 +42,10 @@ This models a realistic burst in which infeasible workloads arrive ahead of runn
 |--------|------:|
 | Runnable workloads submitted | 30 |
 | Runnable workloads admitted | 2 |
-| Unschedulable workloads submitted | 30 |
-| Unschedulable workloads admitted | 8 |
+| Infeasible workloads submitted | 30 |
+| Infeasible workloads admitted | 8 |
 | ClusterQueue quota | 100 CPU |
-| Quota reserved by unschedulable workloads | 96 CPU |
+| Quota reserved by infeasible workloads | 96 CPU |
 | Quota reserved by runnable workloads | 4 CPU |
 
 ### Observation
@@ -58,23 +58,23 @@ The baseline scheduler admitted infeasible workloads because admission considere
 |--------|------:|
 | Runnable workloads submitted | 30 |
 | Runnable workloads admitted | 30 |
-| Unschedulable workloads submitted | 30 |
-| Unschedulable workloads admitted | 0 |
+| Infeasible workloads submitted | 30 |
+| Infeasible workloads admitted | 0 |
 | ClusterQueue quota | 100 CPU |
-| Quota reserved by unschedulable workloads | 0 CPU |
+| Quota reserved by infeasible workloads | 0 CPU |
 | Quota reserved by runnable workloads | 60 CPU |
 
 ### Observation
 
 The enhanced admission pipeline identified infeasible workloads before reserving the ClusterQueue quota. As a result, quota remained available for runnable workloads, all runnable workloads were admitted, and unnecessary Pod creation was avoided.
 
-## Comparison (30 Unschedulable / 30 Runnable)
+## Comparison (30 Infeasible / 30 Runnable)
 
 | Metric | Baseline | Modified |
 |--------|---------:|---------:|
 | Runnable workloads admitted | 2 | 30 |
-| Unschedulable workloads admitted | 8 | 0 |
-| ClusterQueue quota reserved by unschedulable workloads | 96 CPU | 0 CPU |
+| Infeasible workloads admitted | 8 | 0 |
+| ClusterQueue quota reserved by infeasible workloads | 96 CPU | 0 CPU |
 | ClusterQueue quota available for runnable workloads | 4 CPU | 60 CPU |
 
 ## Benchmark Results
