@@ -4,8 +4,6 @@
 
 Evaluate the impact of introducing node capacity-aware admission into Kueue's scheduler. Before reserving ClusterQueue quota, the scheduler determines whether a workload can fit on at least one node based on allocatable CPU and memory, preventing infeasible workloads from consuming admission resources.
 
----
-
 ## Test Environment
 
 | Component | Value |
@@ -16,8 +14,6 @@ Evaluate the impact of introducing node capacity-aware admission into Kueue's sc
 | Node allocatable CPU | 10 CPU |
 | ClusterQueue nominal quota | 100 CPU |
 | ResourceFlavor | default-flavor |
-
----
 
 ## Benchmark Configuration
 
@@ -58,8 +54,6 @@ This models a realistic burst in which infeasible workloads arrive ahead of runn
 
 The baseline scheduler admitted infeasible workloads because admission considered only the ClusterQueue quota. Eight workloads reserved 96 CPU, leaving enough quota for only two runnable workloads, even though the remaining runnable workloads could fit on the node.
 
----
-
 ### Modified Scheduler (Node Feasibility Check Enabled)
 
 | Metric | Value |
@@ -90,25 +84,25 @@ The enhanced admission pipeline identified infeasible workloads before reserving
 ### Runnable Workload Admissions
 
 <p align="center">
-  <img src="images/Runnable Workload Admissions.png" width="700">
+  <img src="/images/Runnable Workload Admissions.png" width="700">
 </p>
 
 ### Infeasible Workload Admissions
 
 <p align="center">
-  <img src="images/Infeasible Workload Admissions.png" width="700">
+  <img src="/images/Infeasible Workload Admissions.png" width="700">
 </p>
 
 ### ClusterQueue Quota Reserved by Infeasible Workloads
 
 <p align="center">
-  <img src="images/ClusterQueue Quota Reserved by Infeasible Workloads.png" width="700">
+  <img src="/images/ClusterQueue Quota Reserved by Infeasible Workloads.png" width="700">
 </p>
 
 ### Runnable Workload Admission Rate
 
 <p align="center">
-  <img src="images/Runnable Workload Admission Rate.png" width="700">
+  <img src="/images/Runnable Workload Admission Rate.png" width="700">
 </p>
 
 ## Key Findings
