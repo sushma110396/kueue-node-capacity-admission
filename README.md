@@ -46,9 +46,31 @@ This preserves ClusterQueue quota for runnable workloads while preventing unnece
   - Clusters with no available nodes
 - Benchmarked the scheduler across multiple workload mixes containing runnable and infeasible workloads.
 
-## Benchmark Summary
+## Benchmark Results
 
-The feature was evaluated using three mixed-workload scenarios on a Kind cluster.
+### Runnable Workload Admissions
+
+<p align="center">
+  <img src="images/Runnable Workload Admissions.png" width="700">
+</p>
+
+### Infeasible Workload Admissions
+
+<p align="center">
+  <img src="images/Infeasible Workload Admissions.png" width="700">
+</p>
+
+### ClusterQueue Quota Reserved by Infeasible Workloads
+
+<p align="center">
+  <img src="images/ClusterQueue Quota Reserved by Infeasible Workloads.png" width="700">
+</p>
+
+### Runnable Workload Admission Rate
+
+<p align="center">
+  <img src="images/Runnable Workload Admission Rate.png" width="700">
+</p>
 
 ### Key Results
 
