@@ -17,7 +17,7 @@ Evaluate the impact of introducing node capacity-aware admission into Kueue's sc
 
 ### Workloads
 
-Three workload mixes were evaluated to measure how infeasible workloads affect admission decisions under different queue compositions.
+The three workload mixes evaluate scheduler behavior under different proportions of infeasible and runnable workloads, ranging from runnable-dominant to infeasible-dominant queues. This demonstrates that the admission improvement is consistent across varying workload distributions rather than being limited to a single benchmark configuration.
 
 | Scenario | Infeasible Workloads | Runnable Workloads |
 |----------|------------------------:|-------------------:|
@@ -34,7 +34,7 @@ For every benchmark:
 1. Submit all infeasible workloads.
 2. Submit all runnable workloads.
 
-This models a realistic burst in which infeasible workloads arrive ahead of runnable workloads and compete for the same ClusterQueue quota.
+This models a workload burst in which infeasible workloads arrive before runnable workloads and compete for the same ClusterQueue quota.
 
 ## Representative Result (30 Infeasible / 30 Runnable)
 ### Baseline Scheduler (Node Capacity-Aware Admission Disabled)
@@ -51,7 +51,7 @@ This models a realistic burst in which infeasible workloads arrive ahead of runn
 
 ### Observation
 
-The baseline scheduler admitted infeasible workloads because admission considered only the ClusterQueue quota. Eight workloads reserved 96 CPU, leaving enough quota for only two runnable workloads, even though the remaining runnable workloads could fit on the node.
+The baseline scheduler admitted infeasible workloads because admission considered only the ClusterQueue quota. Eight infeasible workloads reserved 96 CPU of ClusterQueue quota, leaving enough quota for only two runnable workloads, even though the remaining runnable workloads could fit on the available node.
 
 ### Modified Scheduler (Node Capacity-Aware Admission Enabled)
 
@@ -67,7 +67,7 @@ The baseline scheduler admitted infeasible workloads because admission considere
 
 ### Observation
 
-The enhanced admission pipeline identified infeasible workloads before reserving the ClusterQueue quota. As a result, quota remained available for runnable workloads, all runnable workloads were admitted, and unnecessary Pod creation was avoided.
+The enhanced admission pipeline identified infeasible workloads before reserving the ClusterQueue quota. As a result, ClusterQueue quota remained available for runnable workloads, all runnable workloads were admitted, and Pods were created only for workloads that could fit on the available node.
 
 ## Comparison (30 Infeasible / 30 Runnable)
 
@@ -107,7 +107,7 @@ The enhanced admission pipeline identified infeasible workloads before reserving
 ## Key Findings
 
 - Increased runnable workload admission rates from 4–20% with the baseline scheduler to 100% across all benchmark scenarios.
-- Eliminated ClusterQueue quota consumption by infeasible workloads, ensuring quota remained available for runnable workloads.
+- Eliminated ClusterQueue quota reservation by infeasible workloads, ensuring quota remained available for runnable workloads.
 - Prevented creation of Pods for workloads that exceeded the allocatable CPU or memory capacity of every node, reducing unnecessary scheduling attempts and `FailedScheduling` events.
 
 ## Limitations
