@@ -79,8 +79,6 @@ This preserves ClusterQueue quota for runnable workloads while preventing unnece
 - Increased ClusterQueue quota available for runnable workloads from **4 CPU** to **60 CPU** in the representative workload mix (30 infeasible / 30 runnable).
 - Eliminated unnecessary Pod creation and scheduling attempts for workloads that exceeded the capacity of every node.
 
-![Benchmark Results](images/benchmark-results.png)
-
 For the complete benchmark methodology, workload configuration, experimental setup, and detailed results, see:
 
 **[`docs/benchmark.md`](docs/benchmark.md)**
