@@ -42,16 +42,6 @@ For every benchmark:
 
 This models a realistic burst in which infeasible workloads arrive ahead of runnable workloads and compete for the same ClusterQueue quota.
 
----
-
-## Benchmark Results
-
-The following sections compare the baseline scheduler with the modified scheduler using the representative 30/30 workload mix. Results from all workload mixes are summarized in the charts below.
-
----
-
-## Representative Result (30 Unschedulable / 30 Runnable)
-
 ### Baseline Scheduler (Node Feasibility Check Disabled)
 
 | Metric | Value |
@@ -86,8 +76,6 @@ The baseline scheduler admitted infeasible workloads because admission considere
 
 The enhanced admission pipeline identified infeasible workloads before reserving the ClusterQueue quota. As a result, quota remained available for runnable workloads, all runnable workloads were admitted, and unnecessary Pod creation was avoided.
 
----
-
 ## Comparison (30 Unschedulable / 30 Runnable)
 
 | Metric | Baseline | Modified |
@@ -96,8 +84,6 @@ The enhanced admission pipeline identified infeasible workloads before reserving
 | Unschedulable workloads admitted | 8 | 0 |
 | ClusterQueue quota reserved by unschedulable workloads | 96 CPU | 0 CPU |
 | ClusterQueue quota available for runnable workloads | 4 CPU | 60 CPU |
-
----
 
 ## Benchmark Results
 
@@ -130,8 +116,6 @@ The enhanced admission pipeline identified infeasible workloads before reserving
 - Increased runnable workload admission rates from 4–20% with the baseline scheduler to 100% across all benchmark scenarios.
 - Eliminated ClusterQueue quota consumption by infeasible workloads, ensuring quota remained available for runnable workloads.
 - Prevented creation of Pods for workloads that exceeded the allocatable CPU or memory capacity of every node, reducing unnecessary scheduling attempts and FailedScheduling events.
-
----
 
 ## Limitations
 
