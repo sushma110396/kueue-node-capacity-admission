@@ -34,9 +34,11 @@ For every workload, the scheduler:
 
 This preserves ClusterQueue quota for runnable workloads while preventing unnecessary Pod creation.
 
-## Scheduler flow diagram
+## Scheduler Flow Diagram
 
-<img width="1182" height="2260" alt="Architecture diagram drawio" src="https://github.com/user-attachments/assets/5bfce42d-9ffb-4082-8ea1-2a6f0a6d6205" />
+<p align="center">
+  <img src="images/Architecture.drawio.png" width="550">
+</p>
 
 
 
