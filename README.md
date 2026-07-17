@@ -34,6 +34,9 @@ For every workload, the scheduler:
 
 This preserves ClusterQueue quota for runnable workloads while preventing unnecessary Pod creation.
 
+<img width="1182" height="2260" alt="Architecture diagram drawio" src="https://github.com/user-attachments/assets/531b8112-24ef-4ddf-bc90-cde243abc3dd" />
+
+
 ## Implementation Highlights
 
 - Added node capacity feasibility evaluation before ClusterQueue quota reservation.
