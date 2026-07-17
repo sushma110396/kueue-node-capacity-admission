@@ -36,7 +36,8 @@ This preserves ClusterQueue quota for runnable workloads while preventing unnece
 
 ## Scheduler flow diagram
 
-<img width="1182" height="2260" alt="Architecture diagram drawio" src="https://github.com/user-attachments/assets/531b8112-24ef-4ddf-bc90-cde243abc3dd" />
+<img width="1182" height="2260" alt="Architecture diagram drawio" src="https://github.com/user-attachments/assets/5bfce42d-9ffb-4082-8ea1-2a6f0a6d6205" />
+
 
 
 ## Implementation Highlights
