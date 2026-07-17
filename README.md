@@ -118,3 +118,11 @@ This project extends the open-source Kueue scheduler.
 
 Original project:
 https://github.com/kubernetes-sigs/kueue
+
+## Source Code
+
+## Source Code
+
+The complete implementation, unit tests, and benchmark changes are available in the pull request below:
+
+[View implementation PR](https://github.com/sushma110396/kueue/pull/1)
