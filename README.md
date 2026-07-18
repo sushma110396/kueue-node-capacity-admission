@@ -6,9 +6,14 @@ A distributed systems project that enhances the Kubernetes-native Kueue schedule
 
 Kueue is a Kubernetes-native job scheduler that admits workloads based on available ClusterQueue quota before they are scheduled onto cluster nodes.
 
-In the baseline scheduler, workloads whose CPU or memory requests exceeded the allocatable capacity of every node could still be admitted if sufficient ClusterQueue quota was available. Although these workloads could never be scheduled, they continued to reserve ClusterQueue quota and prevented runnable workloads from being admitted.
+In the baseline scheduler, workloads whose CPU or memory requests exceeded the allocatable capacity of every node could still be admitted if sufficient ClusterQueue quota was available. Although these workloads could never be scheduled, they continued to reserve the ClusterQueue quota and prevented runnable workloads from being admitted.
 
-This project introduces a node capacity-aware admission enhancement that evaluates whether a workload can fit on at least one node before reserving ClusterQueue quota. By filtering infeasible workloads early in the admission pipeline, the scheduler preserves quota for runnable workloads and avoids unnecessary Pod creation.
+This project introduces a node capacity-aware admission enhancement that evaluates whether a workload can fit on at least one node before reserving the ClusterQueue quota. By filtering infeasible workloads early in the admission pipeline, the scheduler preserves quota for runnable workloads and avoids unnecessary Pod creation.
+
+This project extends the open-source Kueue scheduler.
+
+Original project:
+https://github.com/kubernetes-sigs/kueue
 
 ## Problem Statement
 
@@ -111,15 +116,6 @@ For the complete benchmark methodology, workload configuration, experimental set
 - Kind
 - Docker
 - Kubectl
-
-## Based On
-
-This project extends the open-source Kueue scheduler.
-
-Original project:
-https://github.com/kubernetes-sigs/kueue
-
-## Source Code
 
 ## Source Code
 
