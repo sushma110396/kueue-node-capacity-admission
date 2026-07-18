@@ -18,7 +18,7 @@ As a result:
 
 - Workloads that could never fit on any node were still admitted.
 - These workloads reserved ClusterQueue quota.
-- Kubernetes repeatedly attempted to schedule the resulting Pods, producing `FailedScheduling` events.
+- Kubernetes repeatedly attempted to schedule the resulting Pods, producing `FailedScheduling` events. (Kubernetes events that are generated when Pods cannot be placed on any node)
 - Runnable workloads that could have been scheduled were blocked from admission because ClusterQueue quota had already been reserved by infeasible workloads.
 
 ## Solution
