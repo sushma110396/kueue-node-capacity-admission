@@ -36,6 +36,8 @@ For every benchmark:
 
 This models a workload burst in which infeasible workloads arrive before runnable workloads and compete for the same ClusterQueue quota.
 
+The following example illustrates the scheduler behavior using the representative 30 infeasible / 30 runnable workload mix. The benchmark charts compare results across all benchmark scenarios.
+
 ## Representative Result (30 Infeasible / 30 Runnable)
 ### Baseline Scheduler (Node Capacity-Aware Admission Disabled)
 
