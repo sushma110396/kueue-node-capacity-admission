@@ -59,6 +59,19 @@ This preserves ClusterQueue quota for runnable workloads while preventing unnece
   - Clusters with no available nodes
 - Benchmarked the scheduler across multiple workload mixes containing runnable and infeasible workloads.
 
+## Source code
+
+The node capacity-aware admission enhancement is implemented in the following files:
+
+- [`pkg/scheduler/nodefeasibility.go`](https://github.com/sushma110396/kueue/blob/feature/node-capacity-feasibility/pkg/scheduler/nodefeasibility.go)
+  - Performs node capacity feasibility evaluation by comparing workload resource requests with node allocatable CPU and memory.
+
+- [`pkg/scheduler/scheduler.go`](https://github.com/sushma110396/kueue/blob/feature/node-capacity-feasibility/pkg/scheduler/scheduler.go)
+  - Integrates the feasibility check into the admission workflow before ClusterQueue quota reservation.
+
+- [`pkg/scheduler/scheduler_test.go`](https://github.com/sushma110396/kueue/blob/feature/node-capacity-feasibility/pkg/scheduler/scheduler_test.go)
+  - Contains unit tests covering feasible, CPU-infeasible, memory-infeasible, and no-node scenarios.
+
 ## Benchmark Results
 
 ### Runnable Workload Admissions
@@ -116,9 +129,3 @@ For the complete benchmark methodology, workload configuration, experimental set
 - Kind
 - Docker
 - Kubectl
-
-## Source Code
-
-The complete implementation, unit tests, and benchmark changes are available in the pull request below:
-
-[View implementation PR](https://github.com/sushma110396/kueue/pull/1)
