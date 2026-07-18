@@ -115,10 +115,13 @@ For the complete benchmark methodology, workload configuration, experimental set
 .
 ├── README.md
 ├── docs
-│   ├── benchmark.md
-│  
-├── images
-│   └── benchmark-results.png
+│   └── benchmark.md
+└── images
+    ├── Architecture.drawio.png
+    ├── Runnable Workload Admissions.png
+    ├── Infeasible Workload Admissions.png
+    ├── ClusterQueue Quota Reserved by Infeasible Workloads.png
+    └── Runnable Workload Admission Rate.png
 ```
 
 ## Technologies
